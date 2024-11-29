@@ -82,6 +82,9 @@ class IconCollection:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/1200px-Firefox_logo%2C_2019.svg.png"
     )
     bree = IconData("https://avatars.githubusercontent.com/u/68016147")
+    envoy = IconData(
+        "https://seeklogo.com/images/E/envoy-proxy-logo-AA21B06AE5-seeklogo.com.png"
+    )
 
     @classmethod
     def __class_getitem__(cls, key: str) -> IconData:
@@ -132,6 +135,9 @@ class NodeCollection:
 
     def bree(self, name: str = "Bree"):
         return Custom(name, icon_path=IconCollection.bree.icon_path)
+
+    def envoy(self, name: str = "Envoy"):
+        return Custom(name, icon_path=IconCollection.envoy.icon_path)
 
     def external(self, name: str = "External"):
         return Server(name)
@@ -184,6 +190,7 @@ class Sprint1:
         ):
             pub_sub_queue = nodes.pulsar()
             front_cache = nodes.valkey("Front\nCache KVS")
+            proxy = nodes.envoy("gRPC Proxy")
             external = nodes.external()
 
             with Cluster("User"):
@@ -276,7 +283,9 @@ class Sprint1:
                 >> pub_sub_queue
                 >> edges.protobuf("RealTime Notification")
                 >> bookmarks_streamer
-                >> edges.trpc("SSE Notification")
+                >> edges.protobuf("SSE Notification")
+                >> proxy
+                >> edges.data("SSE Notification")
                 >> extension
             )
 
@@ -286,7 +295,9 @@ class Sprint1:
                 >> pub_sub_queue
                 >> edges.protobuf("RealTime Notification")
                 >> feeds_streamer
-                >> edges.trpc("SSE Notification")
+                >> edges.protobuf("SSE Notification")
+                >> proxy
+                >> edges.data("SSE Notification")
                 >> extension
             )
 
