@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package bookmarks.v1;
+
+import "google/protobuf/timestamp.proto";
+
+message BookmarkTag {
+  string id = 1;
+  string name = 2;
+  string user_id = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message Bookmark {
+  string id = 1;
+  string url = 2;
+  string title = 3;
+  optional string description = 4;
+  repeated BookmarkTag tags = 5;  // Stringから型付きの配列に変更
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  string user_id = 8;
+}
+
+message GetBookmarkRequest {
+  string id = 1;
+}
+
+message ListBookmarksRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  repeated string tag_ids = 3;    // tag_idsに名前変更
+  string user_id = 4;
+}
+
+message ListBookmarksResponse {
+  repeated Bookmark bookmarks = 1;
+  string next_page_token = 2;
+  int32 total_count = 3;
+}
+
+message CreateBookmarkRequest {
+  string url = 1;
+  string title = 2;
+  optional string description = 3;
+  repeated string tag_ids = 4;    // tag_idsに名前変更
+  string user_id = 5;
+}
+
+service BookmarkService {
+  rpc GetBookmark(GetBookmarkRequest) returns (Bookmark) {}
+  rpc ListBookmarks(ListBookmarksRequest) returns (ListBookmarksResponse) {}
+  rpc CreateBookmark(CreateBookmarkRequest) returns (Bookmark) {}
+}

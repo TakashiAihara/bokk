@@ -1,0 +1,17 @@
+version: v2
+modules:
+  - path: src
+    name: buf.build/TakashiAihara/bokk
+    lint:
+      use:
+        - DEFAULT
+        - COMMENTS
+      except:
+        - RPC_REQUEST_STANDARD_NAME
+        - RPC_RESPONSE_STANDARD_NAME
+    breaking:
+      use:
+        - FILE
+
+deps:
+  - buf.build/googleapis/googleapis
