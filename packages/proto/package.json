@@ -23,15 +23,13 @@
     "lint": "buf lint"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.12.2",
-    "nice-grpc": "^2.1.10",
-    "nice-grpc-common": "^2.0.2"
+    "@grpc/grpc-js": "catalog:",
+    "nice-grpc": "catalog:",
+    "nice-grpc-common": "catalog:"
   },
   "devDependencies": {
     "@bufbuild/buf": "^1.47.2",
     "@bufbuild/protobuf": "^2.2.2",
-    "@bufbuild/protoc-gen-connect-es": "^0.13.0",
-    "@bufbuild/protoc-gen-es": "^2.2.2",
     "ts-proto": "^2.4.1"
   }
 }
