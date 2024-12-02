@@ -1,12 +1,21 @@
 {
   "name": "@packages/proto",
   "version": "1.0.0",
+  "type": "module",
   "exports": {
-    "./bookmarks": "./gen/ts/bookmarks/v1/bookmarks.ts",
-    "./feeds": "./gen/ts/feeds/v1/feeds.ts"
+    ".": "./gen/ts/index.ts",
+    "./bookmarks": "./gen/ts/index.bookmarks.ts",
+    "./bookmarks/v1": "./gen/ts/index.bookmarks.v1.ts",
+    "./feeds": "./gen/ts/index.feeds.ts",
+    "./feeds/v1": "./gen/ts/index.feeds.v1.ts"
   },
   "main": "gen/ts/index.ts",
+  "module": "gen/ts/index.ts",
   "types": "gen/ts/index.ts",
+  "files": [
+    "gen",
+    "docs"
+  ],
   "scripts": {
     "check-breaking": "buf breaking --against '.git#branch=main'",
     "clean": "rm -rf gen",
